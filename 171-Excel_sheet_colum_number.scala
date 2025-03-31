@@ -1,21 +1,16 @@
-object Solution {
-    def recursive(s:String, acum:Int): Int = {
-        s match {
-            case "" => acum
-            case s if s.length == 1 => s.head.toInt -25
-            case _ => 5
+object Solution extends App{
+    def recursive(l:List[Char], base:Int): Int = {
+        l match {
+            case Nil => 0
+            case char :: Nil => (char.toInt - 64) * base
+            case _ =>  // General case for lists with 2+ elements
+                val init = l.init
+                val last = l.last
+                (last.toInt - 64) * base + recursive(init, base * 26)
         }
     }
     def titleToNumber(columnTitle: String): Int = {
-        // string = CFZ
-        /*
-        A
-        .
-        Z
-        AA - 27
-        .
-        AZ - 52
-        BA - 53
-        */
-
+        recursive(columnTitle.toList, 1)
+    }
+    //println(titleToNumber("ZX"))
 }
